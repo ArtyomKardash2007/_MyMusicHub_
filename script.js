@@ -167,7 +167,19 @@ function updateAuthUI() {
    DATA  — описания исполнителей на трёх языках
    ============================================================ */
 /* helper — путь к фото исполнителя */
-function artistPhoto(id){ return 'images/'+id+'.jpg'; }
+function artistPhoto(id){
+  // Deterministic color + initials avatar via ui-avatars, fallback to picsum seed
+  var colors = {
+    'the-weeknd':'1a0a2e','daft-punk':'2d1b00','arctic-monkeys':'0a1a2e',
+    'billie-eilish':'0d2818','kendrick-lamar':'1a0d00','radiohead':'1a1a2e',
+    'tame-impala':'1a0a1a','eminem':'1a0000','linkin-park':'001a1a',
+    'metallica':'1a1200','kino':'0a0a1a','zemfira':'1a0a12',
+    'queen':'1a1000','nirvana':'001a0a','pink-floyd':'0a1a1a'
+  };
+  var bg = colors[id] || '1a1a2e';
+  var name = id.replace(/-/g,' ').replace(/\b\w/g,function(c){return c.toUpperCase();});
+  return 'https://ui-avatars.com/api/?name='+encodeURIComponent(name)+'&size=400&background='+bg+'&color=c8a96e&bold=true&font-size=0.35&format=png';
+}
 
 var ARTISTS = [
   { id:'the-weeknd', name:'The Weeknd',
@@ -277,54 +289,54 @@ function getLang(obj) {
 }
 
 var TRACKS = [
-  {id:1,title:'Blinding Lights',artist:'The Weeknd',artistId:'the-weeknd',genre:'R&B / Поп',duration:'3:20',year:2019,desc:'Синтвейв-поп хит, ставший одной из самых прослушиваемых песен в истории Spotify. Вдохновлён эстетикой 80-х и нью-вейва.'},
-  {id:2,title:'Starboy',artist:'The Weeknd',artistId:'the-weeknd',genre:'R&B / Поп',duration:'3:50',year:2016,desc:'Заглавный трек альбома Starboy при участии Daft Punk. Холодный, минималистичный бит и характерный фальцет Уикнда.'},
-  {id:3,title:'Save Your Tears',artist:'The Weeknd',artistId:'the-weeknd',genre:'R&B / Поп',duration:'3:35',year:2020,desc:'Меланхоличный синтвейв-трек с альбома After Hours. Лирика о сожалении и невозможности вернуть прошлое.'},
-  {id:4,title:'Die For You',artist:'The Weeknd',artistId:'the-weeknd',genre:'R&B / Поп',duration:'4:20',year:2016,desc:'Эмоциональная баллада, ставшая вирусной спустя годы после выхода. Один из самых любимых треков у фанатов.'},
-  {id:5,title:'Get Lucky',artist:'Daft Punk',artistId:'daft-punk',genre:'Электроника',duration:'6:09',year:2013,desc:'Летний фанк-хит с альбома Random Access Memories при участии Фарелла Уильямса и Найла Роджерса. Мировой хит.'},
-  {id:6,title:'One More Time',artist:'Daft Punk',artistId:'daft-punk',genre:'Электроника',duration:'5:20',year:2000,desc:'Гимн диско-хауса, один из самых узнаваемых треков в истории электронной музыки. Вокал пропущен через вокодер.'},
-  {id:7,title:'Harder Better Faster',artist:'Daft Punk',artistId:'daft-punk',genre:'Электроника',duration:'3:45',year:2001,desc:'Роботизированный фанк-трек с культовым вокодерным рефреном. Классика французского хауса.'},
-  {id:8,title:'Around the World',artist:'Daft Punk',artistId:'daft-punk',genre:'Электроника',duration:'7:09',year:1997,desc:'Минималистичный хаус-трек с повторяющейся фразой — гипнотический и неудержимый. С альбома Homework.'},
-  {id:9,title:'Do I Wanna Know?',artist:'Arctic Monkeys',artistId:'arctic-monkeys',genre:'Инди-рок',duration:'4:32',year:2013,desc:'Медленный, тяжёлый рифф и томный вокал Алекса Тёрнера. Открывает альбом AM — один из лучших рок-альбомов 2010-х.'},
-  {id:10,title:'R U Mine?',artist:'Arctic Monkeys',artistId:'arctic-monkeys',genre:'Инди-рок',duration:'3:21',year:2013,desc:'Агрессивный гитарный рифф и сырая энергетика. Трек стал гимном инди-рока и любимцем живых выступлений.'},
-  {id:11,title:'Fluorescent Adolescent',artist:'Arctic Monkeys',artistId:'arctic-monkeys',genre:'Инди-рок',duration:'2:57',year:2011,desc:'Острая лирика о угасающих страстях под задорный гитарный поп. С альбома Suck It and See.'},
-  {id:12,title:'505',artist:'Arctic Monkeys',artistId:'arctic-monkeys',genre:'Инди-рок',duration:'4:13',year:2007,desc:'Нарастающая баллада с закрытым концом. Один из самых эмоциональных треков группы, ставший культовым.'},
-  {id:13,title:'bad guy',artist:'Billie Eilish',artistId:'billie-eilish',genre:'Поп / Альтернатива',duration:'3:14',year:2019,desc:'Дерзкий поп-хит с дебютного альбома WHEN WE ALL FALL ASLEEP. Минималистичный бит и ироничная подача.'},
-  {id:14,title:'Happier Than Ever',artist:'Billie Eilish',artistId:'billie-eilish',genre:'Поп / Альтернатива',duration:'4:58',year:2021,desc:'Двухчастная песня: нежное начало переходит в яростный рок-финал. Честный манифест об освобождении от токсичных отношений.'},
-  {id:15,title:'ocean eyes',artist:'Billie Eilish',artistId:'billie-eilish',genre:'Поп / Альтернатива',duration:'3:20',year:2016,desc:'Дебютный сингл, записанный в 14 лет. Хрупкий, воздушный поп, который мгновенно разлетелся по интернету.'},
-  {id:16,title:'lovely',artist:'Billie Eilish',artistId:'billie-eilish',genre:'Поп / Альтернатива',duration:'3:33',year:2018,desc:'Дуэт с Khalid для сериала 13 причин почему. Атмосферная, тревожная и невероятно красивая баллада.'},
-  {id:17,title:'HUMBLE.',artist:'Kendrick Lamar',artistId:'kendrick-lamar',genre:'Хип-хоп',duration:'2:57',year:2017,desc:'Пронзительный трап-бит от Mike WiLL Made-It и самоуверенный поток сознания Кендрика. Один из главных хитов DAMN.'},
-  {id:18,title:'Alright',artist:'Kendrick Lamar',artistId:'kendrick-lamar',genre:'Хип-хоп',duration:'3:39',year:2015,desc:'Гимн надежды с альбома To Pimp a Butterfly. Стал гимном движения за гражданские права в США.'},
-  {id:19,title:'DNA.',artist:'Kendrick Lamar',artistId:'kendrick-lamar',genre:'Хип-хоп',duration:'3:05',year:2017,desc:'Взрывное открытие альбома DAMN — два бита в одном треке, агрессивный флоу и декларация идентичности.'},
-  {id:20,title:'Money Trees',artist:'Kendrick Lamar',artistId:'kendrick-lamar',genre:'Хип-хоп',duration:'6:26',year:2012,desc:'Лиричный, меланхоличный трек с good kid, m.A.A.d city. Сэмпл Beach Boy и история взросления в Комптоне.'},
-  {id:21,title:'Creep',artist:'Radiohead',artistId:'radiohead',genre:'Альт-рок',duration:'3:56',year:1992,desc:'Дебютный хит группы о чувстве отчуждённости. Несмотря на то что сама группа устала от трека, он остаётся культовым.'},
-  {id:22,title:'Karma Police',artist:'Radiohead',artistId:'radiohead',genre:'Альт-рок',duration:'4:21',year:1997,desc:'Тревожный поп-рок с альбома OK Computer. Пианино, нарастающий хаос и ощущение неизбежного.'},
-  {id:23,title:'Paranoid Android',artist:'Radiohead',artistId:'radiohead',genre:'Альт-рок',duration:'6:23',year:1997,desc:'Сюита из трёх частей, меняющих темп и настроение. Один из самых амбициозных треков в истории альт-рока.'},
-  {id:24,title:'Exit Music (For a Film)',artist:'Radiohead',artistId:'radiohead',genre:'Альт-рок',duration:'4:24',year:1997,desc:'Написан для финальных титров Ромео и Джульетты Лурмана. Акустическое начало переходит в оглушительный финал.'},
-  {id:25,title:'The Less I Know the Better',artist:'Tame Impala',artistId:'tame-impala',genre:'Психоделический поп',duration:'3:37',year:2015,desc:'Дискотечный поп-рок с альбома Currents, о ревности и упущенной любви. Один из самых узнаваемых треков десятилетия.'},
-  {id:26,title:'Feels Like We Only Go Backwards',artist:'Tame Impala',artistId:'tame-impala',genre:'Психоделический поп',duration:'3:14',year:2012,desc:'Психоделический поп-мечта с шелковистыми слоями синтезаторов и меланхолическим текстом о застрявших чувствах.'},
-  {id:27,title:'Let It Happen',artist:'Tame Impala',artistId:'tame-impala',genre:'Психоделический поп',duration:'7:47',year:2015,desc:'Грандиозное открытие Currents — почти восемь минут нарастающего психоделического транса с неожиданной серединой.'},
-  {id:28,title:'New Person, Same Old Mistakes',artist:'Tame Impala',artistId:'tame-impala',genre:'Психоделический поп',duration:'6:01',year:2015,desc:'Закрывает Currents гипнотическим лупом — трек о знании своих ошибок и повторении их снова и снова.'},
-  {id:29,title:'Lose Yourself',artist:'Eminem',artistId:'eminem',genre:'Хип-хоп / Рэп',duration:'5:26',year:2002,desc:'Оскароносный трек из фильма 8 Миля — гимн о том, чтобы схватить свой шанс. Один из самых мотивирующих рэп-треков всех времён.'},
-  {id:30,title:'Rap God',artist:'Eminem',artistId:'eminem',genre:'Хип-хоп / Рэп',duration:'6:04',year:2013,desc:'Рекордсмен по скорости флоу — в одном из куплетов Эминем произносит 97 слов за 15 секунд. Вошёл в Книгу рекордов Гиннесса.'},
-  {id:31,title:'Stan',artist:'Eminem',artistId:'eminem',genre:'Хип-хоп / Рэп',duration:'6:44',year:2000,desc:'Культовое письмо одержимого фаната своему кумиру. Трек настолько повлиял на культуру, что слово «стэн» вошло в словари.'},
-  {id:32,title:'Godzilla',artist:'Eminem',artistId:'eminem',genre:'Хип-хоп / Рэп',duration:'3:28',year:2020,desc:'Чудовищная скорость флоу и взрывной припев. В финале трека Эминем читает более 225 слов за 31 секунду.'},
-  {id:33,title:'In the End',artist:'Linkin Park',artistId:'linkin-park',genre:'Альт-метал / Ню-метал',duration:'3:36',year:2000,desc:'Один из самых узнаваемых рок-треков 2000-х. Фортепианное вступление, чередование вокала и рэпа — формула, изменившая жанр.'},
-  {id:34,title:'Numb',artist:'Linkin Park',artistId:'linkin-park',genre:'Альт-метал / Ню-метал',duration:'3:05',year:2003,desc:'Гимн тех, кто устал соответствовать чужим ожиданиям. Один из самых просматриваемых клипов в истории YouTube.'},
-  {id:35,title:'Crawling',artist:'Linkin Park',artistId:'linkin-park',genre:'Альт-метал / Ню-метал',duration:'3:29',year:2000,desc:'Лауреат Grammy за лучшее хард-рок исполнение. Честный трек о внутренней боли и потере контроля.'},
-  {id:36,title:'Breaking the Habit',artist:'Linkin Park',artistId:'linkin-park',genre:'Альт-метал / Ню-метал',duration:'3:16',year:2004,desc:'Один из самых эмоциональных треков группы — о борьбе с саморазрушением. Честер Беннингтон вложил в него огромную личную боль.'},
-  {id:37,title:'Enter Sandman',artist:'Metallica',artistId:'metallica',genre:'Хэви-метал / Трэш-метал',duration:'5:31',year:1991,desc:'Открывает «Чёрный альбом» — один из самых продаваемых в истории рока. Тяжёлый рифф и образы ночных кошмаров сделали трек легендой.'},
-  {id:38,title:'Nothing Else Matters',artist:'Metallica',artistId:'metallica',genre:'Хэви-метал / Трэш-метал',duration:'6:28',year:1991,desc:'Неожиданно нежная баллада от мастеров трэш-метала. Джеймс Хэтфилд написал её во время телефонного разговора с девушкой.'},
+  {id:1,title:'Blinding Lights',artist:'The Weeknd',artistId:'the-weeknd',genre:'R&B / Поп',duration:'3:20',year:2019,desc:'Синтвейв-поп хит, ставший одной из самых прослушиваемых песен в истории Spotify. Вдохновлён эстетикой 80-х и нью-вейва.',src:'https://drive.google.com/uc?export=download&id=19XBGrqhP-aCAirBSUpZ4ZjPRzw9gK9-N'},
+  {id:2,title:'Starboy',artist:'The Weeknd',artistId:'the-weeknd',genre:'R&B / Поп',duration:'3:50',year:2016,desc:'Заглавный трек альбома Starboy при участии Daft Punk. Холодный, минималистичный бит и характерный фальцет Уикнда.',src:'https://drive.google.com/uc?export=download&id=1FirDpFKgskeJNjBWIF2gGjKr1HDg5kd2'},
+  {id:3,title:'Save Your Tears',artist:'The Weeknd',artistId:'the-weeknd',genre:'R&B / Поп',duration:'3:35',year:2020,desc:'Меланхоличный синтвейв-трек с альбома After Hours. Лирика о сожалении и невозможности вернуть прошлое.',src:'https://drive.google.com/uc?export=download&id=1zaZNTpYf6AIkA04xS7TFj3SiDKuAHrDT'},
+  {id:4,title:'Die For You',artist:'The Weeknd',artistId:'the-weeknd',genre:'R&B / Поп',duration:'4:20',year:2016,desc:'Эмоциональная баллада, ставшая вирусной спустя годы после выхода. Один из самых любимых треков у фанатов.',src:'https://drive.google.com/uc?export=download&id=1RbKNJ3oaebPknrGzGMK2ZV8ijEiFz5Ow'},
+  {id:5,title:'Get Lucky',artist:'Daft Punk',artistId:'daft-punk',genre:'Электроника',duration:'6:09',year:2013,desc:'Летний фанк-хит с альбома Random Access Memories при участии Фарелла Уильямса и Найла Роджерса. Мировой хит.',src:'https://drive.google.com/uc?export=download&id=1blp_6nBCiaM8ChdB_07oDI6udQx9ihG8'},
+  {id:6,title:'One More Time',artist:'Daft Punk',artistId:'daft-punk',genre:'Электроника',duration:'5:20',year:2000,desc:'Гимн диско-хауса, один из самых узнаваемых треков в истории электронной музыки. Вокал пропущен через вокодер.',src:'https://drive.google.com/uc?export=download&id=1XvXUj0PUzeZajfRW94_Nt08pvC6uT292'},
+  {id:7,title:'Harder Better Faster',artist:'Daft Punk',artistId:'daft-punk',genre:'Электроника',duration:'3:45',year:2001,desc:'Роботизированный фанк-трек с культовым вокодерным рефреном. Классика французского хауса.',src:'https://drive.google.com/uc?export=download&id=1SzP4_-ZegIcJCPwvQKoSbJ3-9V89Mb-R'},
+  {id:8,title:'Around the World',artist:'Daft Punk',artistId:'daft-punk',genre:'Электроника',duration:'7:09',year:1997,desc:'Минималистичный хаус-трек с повторяющейся фразой — гипнотический и неудержимый. С альбома Homework.',src:'https://drive.google.com/uc?export=download&id=1AbYRrL-B2IAT2SVxzoAgHnNyNj3SXI0J'},
+  {id:9,title:'Do I Wanna Know?',artist:'Arctic Monkeys',artistId:'arctic-monkeys',genre:'Инди-рок',duration:'4:32',year:2013,desc:'Медленный, тяжёлый рифф и томный вокал Алекса Тёрнера. Открывает альбом AM — один из лучших рок-альбомов 2010-х.',src:'https://drive.google.com/uc?export=download&id=1SOB_79rmR42coyp8lPS2Ua_93EFmDTwG'},
+  {id:10,title:'R U Mine?',artist:'Arctic Monkeys',artistId:'arctic-monkeys',genre:'Инди-рок',duration:'3:21',year:2013,desc:'Агрессивный гитарный рифф и сырая энергетика. Трек стал гимном инди-рока и любимцем живых выступлений.',src:'https://drive.google.com/uc?export=download&id=1GTW-4U8QF1PouDTcU4D7EUawXWXvX2-w'},
+  {id:11,title:'Fluorescent Adolescent',artist:'Arctic Monkeys',artistId:'arctic-monkeys',genre:'Инди-рок',duration:'2:57',year:2011,desc:'Острая лирика о угасающих страстях под задорный гитарный поп. С альбома Suck It and See.',src:'https://drive.google.com/uc?export=download&id=18BVE6cgVR92HT7R98NJ5f4_c9ls_JntO'},
+  {id:12,title:'505',artist:'Arctic Monkeys',artistId:'arctic-monkeys',genre:'Инди-рок',duration:'4:13',year:2007,desc:'Нарастающая баллада с закрытым концом. Один из самых эмоциональных треков группы, ставший культовым.',src:'https://drive.google.com/uc?export=download&id=1tvbRjnI2PAr14xqud4O1Y8hM_mlbA5XS'},
+  {id:13,title:'bad guy',artist:'Billie Eilish',artistId:'billie-eilish',genre:'Поп / Альтернатива',duration:'3:14',year:2019,desc:'Дерзкий поп-хит с дебютного альбома WHEN WE ALL FALL ASLEEP. Минималистичный бит и ироничная подача.',src:'https://drive.google.com/uc?export=download&id=19scYnpqqTw5U5kah8jDV9qdGxbBiLZ5h'},
+  {id:14,title:'Happier Than Ever',artist:'Billie Eilish',artistId:'billie-eilish',genre:'Поп / Альтернатива',duration:'4:58',year:2021,desc:'Двухчастная песня: нежное начало переходит в яростный рок-финал. Честный манифест об освобождении от токсичных отношений.',src:'https://drive.google.com/uc?export=download&id=1MnPFCBayujimQr5DBICTeNAKolGVuAwq'},
+  {id:15,title:'ocean eyes',artist:'Billie Eilish',artistId:'billie-eilish',genre:'Поп / Альтернатива',duration:'3:20',year:2016,desc:'Дебютный сингл, записанный в 14 лет. Хрупкий, воздушный поп, который мгновенно разлетелся по интернету.',src:'https://drive.google.com/uc?export=download&id=1ngQAoMnQSKa2ozmcsgwgTSybpDrc7Xns'},
+  {id:16,title:'lovely',artist:'Billie Eilish',artistId:'billie-eilish',genre:'Поп / Альтернатива',duration:'3:33',year:2018,desc:'Дуэт с Khalid для сериала 13 причин почему. Атмосферная, тревожная и невероятно красивая баллада.',src:'https://drive.google.com/uc?export=download&id=1YdGr5z3geSb5YasDPC9ejnL5ZqFQIQjJ'},
+  {id:17,title:'HUMBLE.',artist:'Kendrick Lamar',artistId:'kendrick-lamar',genre:'Хип-хоп',duration:'2:57',year:2017,desc:'Пронзительный трап-бит от Mike WiLL Made-It и самоуверенный поток сознания Кендрика. Один из главных хитов DAMN.',src:'https://drive.google.com/uc?export=download&id=13to0XL-tcaCrc6aFR0fT2QxX2AVTjB03'},
+  {id:18,title:'Alright',artist:'Kendrick Lamar',artistId:'kendrick-lamar',genre:'Хип-хоп',duration:'3:39',year:2015,desc:'Гимн надежды с альбома To Pimp a Butterfly. Стал гимном движения за гражданские права в США.',src:'https://drive.google.com/uc?export=download&id=1BBE5maKz0AUGD_FPryQSc2-pBNzHIZLP'},
+  {id:19,title:'DNA.',artist:'Kendrick Lamar',artistId:'kendrick-lamar',genre:'Хип-хоп',duration:'3:05',year:2017,desc:'Взрывное открытие альбома DAMN — два бита в одном треке, агрессивный флоу и декларация идентичности.',src:'https://drive.google.com/uc?export=download&id=1jR-Zxk7p63DSDxWIdceriNRLAY6GIJFe'},
+  {id:20,title:'Money Trees',artist:'Kendrick Lamar',artistId:'kendrick-lamar',genre:'Хип-хоп',duration:'6:26',year:2012,desc:'Лиричный, меланхоличный трек с good kid, m.A.A.d city. Сэмпл Beach Boy и история взросления в Комптоне.',src:'https://drive.google.com/uc?export=download&id=1yDaau-1y3Ko4w7calLh_YX4zNt2BVpmq'},
+  {id:21,title:'Creep',artist:'Radiohead',artistId:'radiohead',genre:'Альт-рок',duration:'3:56',year:1992,desc:'Дебютный хит группы о чувстве отчуждённости. Несмотря на то что сама группа устала от трека, он остаётся культовым.',src:'https://drive.google.com/uc?export=download&id=1xUqU2MNDTBfR_dlyo-igUVZy07ah5EgV'},
+  {id:22,title:'Karma Police',artist:'Radiohead',artistId:'radiohead',genre:'Альт-рок',duration:'4:21',year:1997,desc:'Тревожный поп-рок с альбома OK Computer. Пианино, нарастающий хаос и ощущение неизбежного.',src:'https://drive.google.com/uc?export=download&id=1kztg76YToLZo3jqs-3py9ib6AJFP_Unp'},
+  {id:23,title:'Paranoid Android',artist:'Radiohead',artistId:'radiohead',genre:'Альт-рок',duration:'6:23',year:1997,desc:'Сюита из трёх частей, меняющих темп и настроение. Один из самых амбициозных треков в истории альт-рока.',src:'https://drive.google.com/uc?export=download&id=1ussMUM81VGCB3BfWrSLM35XRbT97poEA'},
+  {id:24,title:'Exit Music (For a Film)',artist:'Radiohead',artistId:'radiohead',genre:'Альт-рок',duration:'4:24',year:1997,desc:'Написан для финальных титров Ромео и Джульетты Лурмана. Акустическое начало переходит в оглушительный финал.',src:'https://drive.google.com/uc?export=download&id=1Oh0-CjVa2_FoF6yU_8WS6JIkCG094jot'},
+  {id:25,title:'The Less I Know the Better',artist:'Tame Impala',artistId:'tame-impala',genre:'Психоделический поп',duration:'3:37',year:2015,desc:'Дискотечный поп-рок с альбома Currents, о ревности и упущенной любви. Один из самых узнаваемых треков десятилетия.',src:'https://drive.google.com/uc?export=download&id=13-0e55Q-CsuhLI4rflxMNAoblNrKCacD'},
+  {id:26,title:'Feels Like We Only Go Backwards',artist:'Tame Impala',artistId:'tame-impala',genre:'Психоделический поп',duration:'3:14',year:2012,desc:'Психоделический поп-мечта с шелковистыми слоями синтезаторов и меланхолическим текстом о застрявших чувствах.',src:'https://drive.google.com/uc?export=download&id=15lcZV8OE8wCVCn262xTPuSKsF9fFKvu1'},
+  {id:27,title:'Let It Happen',artist:'Tame Impala',artistId:'tame-impala',genre:'Психоделический поп',duration:'7:47',year:2015,desc:'Грандиозное открытие Currents — почти восемь минут нарастающего психоделического транса с неожиданной серединой.',src:'https://drive.google.com/uc?export=download&id=1tgX9ZRJxrUOs9Mv4_0QQlXe_wJywwFj1'},
+  {id:28,title:'New Person, Same Old Mistakes',artist:'Tame Impala',artistId:'tame-impala',genre:'Психоделический поп',duration:'6:01',year:2015,desc:'Закрывает Currents гипнотическим лупом — трек о знании своих ошибок и повторении их снова и снова.',src:'https://drive.google.com/uc?export=download&id=1xHmF-f9vDCB1Aez8LJjhSMKymBXivKno'},
+  {id:29,title:'Lose Yourself',artist:'Eminem',artistId:'eminem',genre:'Хип-хоп / Рэп',duration:'5:26',year:2002,desc:'Оскароносный трек из фильма 8 Миля — гимн о том, чтобы схватить свой шанс. Один из самых мотивирующих рэп-треков всех времён.',src:'https://drive.google.com/uc?export=download&id=1Zme9RLpaYEEalyAWvkd4FZo55scT4ZR2'},
+  {id:30,title:'Rap God',artist:'Eminem',artistId:'eminem',genre:'Хип-хоп / Рэп',duration:'6:04',year:2013,desc:'Рекордсмен по скорости флоу — в одном из куплетов Эминем произносит 97 слов за 15 секунд. Вошёл в Книгу рекордов Гиннесса.',src:'https://drive.google.com/uc?export=download&id=1bH-VlZxlio3Mj8q7a6q0tjS0-lBHmppR'},
+  {id:31,title:'Stan',artist:'Eminem',artistId:'eminem',genre:'Хип-хоп / Рэп',duration:'6:44',year:2000,desc:'Культовое письмо одержимого фаната своему кумиру. Трек настолько повлиял на культуру, что слово «стэн» вошло в словари.',src:'https://drive.google.com/uc?export=download&id=14xPkTFhCeH0wwIXcl9tudYBdCyXk87e2'},
+  {id:32,title:'Godzilla',artist:'Eminem',artistId:'eminem',genre:'Хип-хоп / Рэп',duration:'3:28',year:2020,desc:'Чудовищная скорость флоу и взрывной припев. В финале трека Эминем читает более 225 слов за 31 секунду.',src:'https://drive.google.com/uc?export=download&id=1bA6BZJwi0A_kwruvajZuQqVsEkqOYbUy'},
+  {id:33,title:'In the End',artist:'Linkin Park',artistId:'linkin-park',genre:'Альт-метал / Ню-метал',duration:'3:36',year:2000,desc:'Один из самых узнаваемых рок-треков 2000-х. Фортепианное вступление, чередование вокала и рэпа — формула, изменившая жанр.',src:'https://drive.google.com/uc?export=download&id=1vzY1GBmzl9pmb0hustxGCLjcj-EdnY4s'},
+  {id:34,title:'Numb',artist:'Linkin Park',artistId:'linkin-park',genre:'Альт-метал / Ню-метал',duration:'3:05',year:2003,desc:'Гимн тех, кто устал соответствовать чужим ожиданиям. Один из самых просматриваемых клипов в истории YouTube.',src:'https://drive.google.com/uc?export=download&id=1yOPcbuT7zagxlsZUruU8x-VdqC_jNPzB'},
+  {id:35,title:'Crawling',artist:'Linkin Park',artistId:'linkin-park',genre:'Альт-метал / Ню-метал',duration:'3:29',year:2000,desc:'Лауреат Grammy за лучшее хард-рок исполнение. Честный трек о внутренней боли и потере контроля.',src:'https://drive.google.com/uc?export=download&id=1OuHOYEvfQXsWb0G3_nzUgJSJJqIX5q4a'},
+  {id:36,title:'Breaking the Habit',artist:'Linkin Park',artistId:'linkin-park',genre:'Альт-метал / Ню-метал',duration:'3:16',year:2004,desc:'Один из самых эмоциональных треков группы — о борьбе с саморазрушением. Честер Беннингтон вложил в него огромную личную боль.',src:'https://drive.google.com/uc?export=download&id=1Yp1iK9FAT_TAyLZ8E5pyBYWz1fBn9WNd'},
+  {id:37,title:'Enter Sandman',artist:'Metallica',artistId:'metallica',genre:'Хэви-метал / Трэш-метал',duration:'5:31',year:1991,desc:'Открывает «Чёрный альбом» — один из самых продаваемых в истории рока. Тяжёлый рифф и образы ночных кошмаров сделали трек легендой.',src:'https://drive.google.com/uc?export=download&id=1GYLWWLuZU3Yu4-wgNJf9Jv0jnioT-i_O'},
+  {id:38,title:'Nothing Else Matters',artist:'Metallica',artistId:'metallica',genre:'Хэви-метал / Трэш-метал',duration:'6:28',year:1991,desc:'Неожиданно нежная баллада от мастеров трэш-метала. Джеймс Хэтфилд написал её во время телефонного разговора с девушкой.',src:'https://drive.google.com/uc?export=download&id=1CkO1-M9KbWJVJCJqM3w50gcUAn55KFZA'},
   {id:39,title:'Master of Puppets',artist:'Metallica',artistId:'metallica',genre:'Хэви-метал / Трэш-метал',duration:'8:35',year:1986,desc:'Признан одним из величайших метал-треков всех времён. После использования в сериале «Очень странные дела» переживает второй расцвет.'},
   {id:40,title:'One',artist:'Metallica',artistId:'metallica',genre:'Хэви-метал / Трэш-метал',duration:'7:25',year:1988,desc:'Антивоенный трек, вдохновлённый романом «Джонни получил винтовку». Начинается тихо и взрывается одним из лучших соло Кёрка Хэммета.'},
-  {id:41,title:'Группа крови',artist:'Кино',artistId:'kino',genre:'Русский рок',duration:'4:59',year:1988,desc:'Главный гимн советского рок-андеграунда. Виктор Цой написал трек как манифест поколения, ищущего выход и правду.'},
-  {id:42,title:'Последний герой',artist:'Кино',artistId:'kino',genre:'Русский рок',duration:'3:55',year:1989,desc:'Меланхоличный портрет одиночки, идущего своим путём. Один из самых поэтичных и пронзительных треков Цоя.'},
-  {id:43,title:'Звезда по имени Солнце',artist:'Кино',artistId:'kino',genre:'Русский рок',duration:'4:24',year:1989,desc:'Символ целой эпохи — трек о свободе, мечте и неизбежности. Вышел в последнем альбоме Кино при жизни Цоя.'},
-  {id:44,title:'Перемен',artist:'Кино',artistId:'kino',genre:'Русский рок',duration:'5:11',year:1986,desc:'Стал гимном перестройки и символом жажды перемен. Один из самых цитируемых рок-треков в русской культуре.'},
-  {id:45,title:'Почему',artist:'Земфира',artistId:'zemfira',genre:'Русский рок / Поп-рок',duration:'3:28',year:1999,desc:'Дебютный хит, взорвавший русское радио в 1999 году. Хриплый голос, гитара и прямой вопрос — формула, покорившая страну.'},
-  {id:46,title:'Хочешь?',artist:'Земфира',artistId:'zemfira',genre:'Русский рок / Поп-рок',duration:'3:12',year:1999,desc:'Провокационный и дерзкий трек с дебютного альбома. Земфира ворвалась в музыку без извинений — этот трек тому доказательство.'},
-  {id:47,title:'Ариведерчи',artist:'Земфира',artistId:'zemfira',genre:'Русский рок / Поп-рок',duration:'3:45',year:2000,desc:'Один из самых романтичных и одновременно горьких треков певицы. Прощание, звучащее как признание в любви.'},
-  {id:48,title:'Искала',artist:'Земфира',artistId:'zemfira',genre:'Русский рок / Поп-рок',duration:'3:55',year:2000,desc:'Один из самых узнаваемых треков певицы — история поиска и невозможности найти. Мощный припев и характерная хрипотца сделали его классикой русского рока.'},
+  {id:41,title:'Группа крови',artist:'Кино',artistId:'kino',genre:'Русский рок',duration:'4:59',year:1988,desc:'Главный гимн советского рок-андеграунда. Виктор Цой написал трек как манифест поколения, ищущего выход и правду.',src:'https://drive.google.com/uc?export=download&id=1r0qSvQ_2ppi6KCk1U3N3Vwf7RRGvo6xG'},
+  {id:42,title:'Последний герой',artist:'Кино',artistId:'kino',genre:'Русский рок',duration:'3:55',year:1989,desc:'Меланхоличный портрет одиночки, идущего своим путём. Один из самых поэтичных и пронзительных треков Цоя.',src:'https://drive.google.com/uc?export=download&id=1qF0uR9cLlvbcEUDHnXy1fXsknggn-uPU'},
+  {id:43,title:'Звезда по имени Солнце',artist:'Кино',artistId:'kino',genre:'Русский рок',duration:'4:24',year:1989,desc:'Символ целой эпохи — трек о свободе, мечте и неизбежности. Вышел в последнем альбоме Кино при жизни Цоя.',src:'https://drive.google.com/uc?export=download&id=1YxgcMafv1WKNMCDOeyBDNOh_nxV5mKKs'},
+  {id:44,title:'Перемен',artist:'Кино',artistId:'kino',genre:'Русский рок',duration:'5:11',year:1986,desc:'Стал гимном перестройки и символом жажды перемен. Один из самых цитируемых рок-треков в русской культуре.',src:'https://drive.google.com/uc?export=download&id=1qH8pASc0eaOyPcMNrI5NydvT5UzEwOT3'},
+  {id:45,title:'Почему',artist:'Земфира',artistId:'zemfira',genre:'Русский рок / Поп-рок',duration:'3:28',year:1999,desc:'Дебютный хит, взорвавший русское радио в 1999 году. Хриплый голос, гитара и прямой вопрос — формула, покорившая страну.',src:'https://drive.google.com/uc?export=download&id=1wTwzCQF_oKgFrp-ZZrnYlyEm5NAiLHsi'},
+  {id:46,title:'Хочешь?',artist:'Земфира',artistId:'zemfira',genre:'Русский рок / Поп-рок',duration:'3:12',year:1999,desc:'Провокационный и дерзкий трек с дебютного альбома. Земфира ворвалась в музыку без извинений — этот трек тому доказательство.',src:'https://drive.google.com/uc?export=download&id=1VfWPLCuMZHFXlMVjL2YYj6fBhm_eoSdK'},
+  {id:47,title:'Ариведерчи',artist:'Земфира',artistId:'zemfira',genre:'Русский рок / Поп-рок',duration:'3:45',year:2000,desc:'Один из самых романтичных и одновременно горьких треков певицы. Прощание, звучащее как признание в любви.',src:'https://drive.google.com/uc?export=download&id=1WVuS4t-Dwb8tQkbECf98pAqwDcogbdeM'},
+  {id:48,title:'Искала',artist:'Земфира',artistId:'zemfira',genre:'Русский рок / Поп-рок',duration:'3:55',year:2000,desc:'Один из самых узнаваемых треков певицы — история поиска и невозможности найти. Мощный припев и характерная хрипотца сделали его классикой русского рока.',src:'https://drive.google.com/uc?export=download&id=1UJPTYysqZhazDJ2lRh_YZDkbuh-bSkts'},
 ];
 
 var POPULAR_IDS=[29,33,37,1,41,45,9,17,5,25];
@@ -374,7 +386,8 @@ function updateMpFavBtn(){
    ============================================================ */
 function createTrackCard(track,queueList){
   var card=document.createElement('article');card.className='track-card';card.dataset.id=track.id;
-  card.innerHTML=
+  var coverImg='<div class="track-card__cover"><img src="'+artistPhoto(track.artistId)+'" alt="'+track.artist+'" onerror="this.parentElement.style.display=\'none\'"/></div>';
+  card.innerHTML=coverImg+
     '<div class="track-card__genre">'+track.genre+'</div>'+
     '<div class="track-card__title" title="'+track.title+'">'+track.title+'</div>'+
     '<div class="track-card__artist">'+track.artist+'</div>'+
@@ -466,7 +479,7 @@ function renderNewReleases(){var tr=NEW_RELEASE_IDS.map(function(id){return TRAC
 function renderFeaturedArtists(){
   var featured=FEATURED_ARTIST_IDS.map(function(id){return ARTISTS.find(function(a){return a.id===id;});}).filter(Boolean);
   buildCarousel('featured-artists',featured,function(artist){
-    var card=document.createElement('article');card.className='artist-card';card.dataset.artistId=artist.id;
+    var card=document.createElement('article');card.className='artist-card';
     var desc=getLang(artist.desc);
     var genre=getLang(artist.genre);
     card.innerHTML=
@@ -515,7 +528,7 @@ function selectGenre(genre,label,menu){
 function renderArtists(){
   var list=document.getElementById('artists-list');list.innerHTML='';
   ARTISTS.forEach(function(artist){
-    var card=document.createElement('article');card.className='artist-card';card.id='artist-'+artist.id;card.dataset.artistId=artist.id;
+    var card=document.createElement('article');card.className='artist-card';card.id='artist-'+artist.id;
     var desc=getLang(artist.desc);
     var genre=getLang(artist.genre);
     card.innerHTML=
@@ -570,7 +583,8 @@ function renderFavorites() {
 function openModal(track){
   var overlay=document.getElementById('modal-overlay');var content=document.getElementById('modal-content');
   var artistObj=ARTISTS.find(function(a){return a.id===track.artistId;});
-  content.innerHTML=
+  var artistImgHtml=artistObj?'<div class="modal__artist-photo"><img src="'+artistPhoto(track.artistId)+'" alt="'+track.artist+'" onerror="this.parentElement.style.display=\'none\'"/></div>':'';
+  content.innerHTML=artistImgHtml+
     '<div class="modal__genre">'+track.genre+'</div>'+
     '<div class="modal__title">'+track.title+'</div>'+
     '<div class="modal__artist">'+track.artist+'</div>'+
@@ -626,7 +640,7 @@ function loadAndPlay(track){
 function _loadTrack(track){
   clearInterval(player.simTimer);player.audio.pause();
   player.currentTrack=track;player.simTime=0;player.simDuration=parseDuration(track.duration);player.isPlaying=true;
-  player.audio.src='audio/'+track.id+'.mp3';player.audio.load();
+  player.audio.src=track.src||('audio/'+track.id+'.mp3');player.audio.load();
   player.audio.play().then(function(){clearInterval(player.simTimer);}).catch(function(){startSim();});
   showMiniPlayer(track);updatePlayerUI();updateMpFavBtn();
 }
