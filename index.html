@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MyMusicHub</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header class="header" id="top">
+    <div class="header__inner">
+      <a href="#home" class="logo" data-section="home">
+        <span class="logo__icon">♫</span>
+        <span class="logo__text">MyMusicHub</span>
+      </a>
+      <nav class="nav" id="nav">
+        <ul class="nav__list">
+          <li><a href="#home"      class="nav__link" data-section="home"      data-i18n="nav_home">Главная</a></li>
+          <li><a href="#tracks"    class="nav__link" data-section="tracks"    data-i18n="nav_tracks">Все треки</a></li>
+          <li><a href="#artists"   class="nav__link" data-section="artists"   data-i18n="nav_artists">Исполнители</a></li>
+          <li><a href="#favorites" class="nav__link" data-section="favorites" data-i18n="nav_favorites">Избранное</a></li>
+        </ul>
+      </nav>
+      <div class="header__actions">
+        <div class="lang-switcher">
+          <button class="lang-btn active" data-lang="ru">RU</button>
+          <button class="lang-btn" data-lang="en">EN</button>
+          <button class="lang-btn" data-lang="kz">KZ</button>
+        </div>
+        <div class="auth-area" id="auth-area"></div>
+      </div>
+      <button class="burger" id="burger" aria-label="Меню">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section class="section hero" id="home">
+      <div class="container">
+        <div class="hero__content">
+          <p class="hero__label" data-i18n="hero_welcome">Добро пожаловать</p>
+          <h1 class="hero__title" data-i18n="hero_title">Слушай. Открывай.<br>Чувствуй музыку.</h1>
+          <p class="hero__desc" data-i18n="hero_desc">MyMusicHub — платформа, где собраны лучшие треки и исполнители разных жанров. Находи новое, сохраняй любимое.</p>
+          <button class="btn btn--primary" onclick="scrollToSection('tracks')" data-i18n="hero_btn">Смотреть треки</button>
+        </div>
+        <div class="hero__visual">
+          <div class="equalizer" aria-hidden="true">
+            <span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span>
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <h2 class="section__title" data-i18n="popular_tracks">Популярные треки</h2>
+        <div class="carousel-container" id="popular-tracks"></div>
+      </div>
+      <div class="container">
+        <h2 class="section__title" data-i18n="new_releases">Новые релизы</h2>
+        <div class="carousel-container" id="new-releases"></div>
+      </div>
+      <div class="container">
+        <h2 class="section__title" data-i18n="featured_artists">Рекомендуемые исполнители</h2>
+        <div class="carousel-container" id="featured-artists"></div>
+      </div>
+    </section>
+
+    <section class="section" id="tracks">
+      <div class="container">
+        <h2 class="section__title" data-i18n="all_tracks">Все треки</h2>
+        <div class="tracks-controls">
+          <input type="text" id="search" class="search-input" placeholder="🔍  Поиск по названию..." data-i18n-placeholder="search_placeholder" />
+          <div class="genre-filters" id="genre-filters"></div>
+        </div>
+        <div class="tracks-grid" id="tracks-grid"></div>
+        <p class="no-results hidden" id="no-results" data-i18n="no_results">Ничего не найдено 😕</p>
+      </div>
+    </section>
+
+    <section class="section" id="artists">
+      <div class="container">
+        <h2 class="section__title" data-i18n="artists_title">Исполнители</h2>
+        <div class="artists-list" id="artists-list"></div>
+        <div class="artist-tracks" id="artist-tracks"></div>
+      </div>
+    </section>
+
+    <section class="section" id="favorites">
+      <div class="container">
+        <h2 class="section__title" data-i18n="favorites_title">Избранное</h2>
+        <p class="favorites-hint" data-i18n="favorites_hint">Нажмите ♡ на карточке трека, чтобы добавить его сюда.</p>
+        <div class="playlist-header hidden" id="favorites-header">
+          <div class="playlist-header__info">
+            <span class="playlist-icon">🎵</span>
+            <div>
+              <div class="playlist-title" data-i18n="playlist_title">Плейлист из избранного</div>
+              <div class="playlist-count"></div>
+            </div>
+          </div>
+          <button class="btn btn--primary playlist-play-all">▶ Воспроизвести всё</button>
+        </div>
+        <div class="tracks-grid" id="favorites-grid"></div>
+        <p class="no-results hidden" id="no-favorites" data-i18n="no_favorites">Ваше избранное пока пусто.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div>
+        <span class="logo__text">♫ MyMusicHub</span>
+        <p class="footer__desc" data-i18n="footer_desc">Музыкальная платформа нового поколения</p>
+      </div>
+      <div class="footer__links">
+        <a href="#home" onclick="scrollToSection('home')" data-i18n="nav_home">Главная</a>
+        <a href="#tracks" onclick="scrollToSection('tracks')" data-i18n="nav_tracks">Треки</a>
+      </div>
+      <div class="footer__copy"><p>© 2025 MyMusicHub. Все права защищены.</p></div>
+    </div>
+  </footer>
+
+  <!-- MINI PLAYER -->
+  <div class="mini-player" id="mini-player">
+    <div class="mini-player__info" id="mp-info-click" style="cursor:pointer" title="Открыть плеер">
+      <div class="mini-player__title" id="mp-title">—</div>
+      <div class="mini-player__artist" id="mp-artist">—</div>
+    </div>
+    <div class="mini-player__controls">
+      <button class="mp-btn" id="mp-prev" title="Предыдущий">⏮</button>
+      <button class="mp-btn mp-btn--play" id="mp-play" title="Воспроизвести">▶</button>
+      <button class="mp-btn" id="mp-next" title="Следующий">⏭</button>
+      <button class="mp-btn mp-btn--repeat" id="mp-repeat" title="Повтор">🔁</button>
+      <button class="mp-btn mp-btn--fav" id="mp-fav" title="В избранное">♡</button>
+    </div>
+    <div class="mini-player__progress">
+      <span class="mp-time" id="mp-cur">0:00</span>
+      <div class="progress-bar" id="progress-bar">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+      <span class="mp-time mp-time--end" id="mp-dur">0:00</span>
+    </div>
+    <button class="mini-player__close" id="mp-close" title="Закрыть">✕</button>
+  </div>
+
+  <!-- FULLSCREEN PLAYER -->
+  <div class="fs-player hidden" id="fs-player">
+    <div class="fs-player__bg" id="fs-bg"></div>
+    <button class="fs-player__close" id="fs-close">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 21 6 15"/></svg>
+    </button>
+    <div class="fs-player__inner">
+      <div class="fs-player__meta">
+        <div class="fs-player__genre" id="fs-genre"></div>
+        <h2 class="fs-player__title" id="fs-title">—</h2>
+        <p class="fs-player__artist" id="fs-artist">—</p>
+      </div>
+      <div class="fs-player__controls">
+        <button class="fs-btn" id="fs-prev">⏮</button>
+        <button class="fs-btn fs-btn--play" id="fs-play">▶</button>
+        <button class="fs-btn" id="fs-next">⏭</button>
+        <button class="fs-btn fs-btn--repeat" id="fs-repeat">🔁</button>
+        <button class="fs-btn fs-btn--fav" id="fs-fav">♡</button>
+      </div>
+      <div class="fs-player__progress">
+        <span class="fs-time" id="fs-cur">0:00</span>
+        <div class="fs-progress-bar" id="fs-progress-bar">
+          <div class="fs-progress-fill" id="fs-progress-fill"></div>
+        </div>
+        <span class="fs-time" id="fs-dur">0:00</span>
+      </div>
+      <div class="fs-player__artist-info" id="fs-artist-info"></div>
+    </div>
+  </div>
+
+  <!-- MODAL -->
+  <div class="modal-overlay hidden" id="modal-overlay">
+    <div class="modal" id="modal" role="dialog" aria-modal="true">
+      <button class="modal__close" id="modal-close" aria-label="Закрыть">✕</button>
+      <div class="modal__content" id="modal-content"></div>
+    </div>
+  </div>
+
+  <!-- AUTH MODAL -->
+  <div class="modal-overlay hidden" id="auth-overlay">
+    <div class="modal auth-modal" id="auth-box" role="dialog" aria-modal="true"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
